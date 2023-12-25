@@ -22,8 +22,6 @@ const Details: FC = () => {
     text: "",
   });
   const id = useParams()?.id;
-
-  // const { comments, updateComments, deleteComment } = useComments(id);
   const { currentTheme } = useContext(Theme);
   const router = useRouter();
 
@@ -38,6 +36,7 @@ const Details: FC = () => {
   };
 
   const [comments, setComments] = useState([]);
+
   useEffect(() => {
     const data = JSON.parse(window.localStorage.getItem(id));
     if (data?.length) {
@@ -77,31 +76,16 @@ const Details: FC = () => {
         <Header arrowBack={true} />
         {!loading ? (
           <section className="min-h-screen flex items-center flex-col pb-20 px-4 relative ">
-            <Image
-              src={movieDetails?.background_image}
-              width={900}
-              height={500}
-              alt="bg"
-              style={{
-                maxHeight: "400px",
-                width: "100%",
-                aspectRatio: "16/9",
-                objectFit: "cover",
-                borderRadius: "4.5em",
-              }}
-              className="  w-full brightness-50 p-10 rounded-lg"
-            />
-            <div className="container py-20 px-20 flex flex-col lg:flex-row items-start">
+            <div className="container py-20 px-20 flex flex-col lg:flex-row items-start max-sm:px-3">
               <div>
                 <div
                   style={{
                     minWidth: "300px",
-                    width: "100%",
                     maxWidth: "400px",
                     minHeight: "600px",
                     position: "relative",
                   }}
-                  className="mb-5">
+                  className="mb-5 justify-center flex w-full">
                   <Image
                     layout="fill"
                     loading="lazy"
@@ -114,7 +98,7 @@ const Details: FC = () => {
                     onClick={() => {
                       router.push(movieDetails?.url || "");
                     }}
-                    className="py-4 w-full px-6 lex items-center justify-center border text-white  font-extrabold cursor-pointer rounded-lg bg-gray-500 hover:bg-black">
+                    className="mb-5 py-4 w-full px-6 lex items-center justify-center border text-white  font-extrabold cursor-pointer rounded-lg bg-gray-500 hover:bg-black">
                     Watch now
                   </button>
                 </div>
@@ -178,11 +162,10 @@ const Details: FC = () => {
               </div>
             </div>
             <div className="container flex flex-col flex items-center flex-col w-full">
-              <p className="text-3xl text-white mb-5">Comments</p>
-
+              <p className="text-3xl text-white mb-5 mr-auto">Comments</p>
               <button
                 onClick={onSendComment}
-                className=" border rounded-md p-3 mt-3 bg-none"
+                className=" border rounded-md p-3 mt-3 bg-none mr-auto"
                 style={{
                   color: `${currentTheme == "black" ? "white" : "black"}`,
                   borderColor: `${currentTheme == "black" ? "white" : "black"}`,
@@ -190,7 +173,7 @@ const Details: FC = () => {
                 Make review
               </button>
               <div className="flex flex-col mt-10 w-full">
-                {comments &&
+                {comments?.length > 0 ? (
                   comments?.map((comment, index) => (
                     <div
                       key={index}
@@ -203,7 +186,15 @@ const Details: FC = () => {
                         DELETE
                       </button>
                     </div>
-                  ))}
+                  ))
+                ) : (
+                  <p
+                    className={`text-3xl ${
+                      currentTheme == "black" ? "text-white" : "text-black"
+                    }`}>
+                    No comments yet
+                  </p>
+                )}
               </div>
             </div>
           </section>

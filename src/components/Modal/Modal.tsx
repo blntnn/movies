@@ -15,6 +15,7 @@ export const Modal = ({ id, show, setComments, setShow }) => {
     }
     setComments((prev) => [...prev, comment]);
     setComment({ name: "", text: "" });
+    setShow(false);
   };
   if (!show) {
     return null;
@@ -42,12 +43,12 @@ export const Modal = ({ id, show, setComments, setShow }) => {
         />
         <button
           onClick={sendComments}
-          className="border border-white hover:bg-black hover:text-white p-4 mb-3  hover:bg-white hover:text-black">
+          className="border border-white   p-4 mb-3  hover:bg-white hover:text-black">
           Send
         </button>
         <button
           onClick={() => setShow(false)}
-          className="border border-white hover:bg-black hover:text-white p-4 hover:bg-white hover:text-black">
+          className="border border-white  p-4 hover:bg-white hover:text-black">
           Close
         </button>
       </div>
